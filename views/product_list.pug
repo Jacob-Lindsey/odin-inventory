@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  div.container
+    h1 #{title} Guitars
+    each product in products_list
+      p #{product.name}
+
+    //- each category in category_list 
+    //- p #{category.name}
