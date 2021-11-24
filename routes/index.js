@@ -30,6 +30,14 @@ router.get("/category/:id", category_controller.category_detail);
 // GET request for list of all Categories.
 router.get("/categories", category_controller.category_list);
 
+
+
+
+/// PRODUCT ROUTES ///
+
+// GET request for Product Details
+router.get("/product/:id", product_controller.product_detail);
+
 // GET request for list of all Products.
 router.get("/products", product_controller.product_list);
 

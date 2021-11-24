@@ -1,12 +1,7 @@
 extends layout
+include ../partials/mixins
 
 block content
   div.container
+    +sidenav(category_list)
     h1= title
-    nav.nav.flex-column.position-absolute.absolute-left-top.gap-1
-      a.nav-link.link-hover(href='/products') All Products
-      each category in category_list 
-        a.nav-link.link-hover(href=category.url) #{category.name}
-      
-      a.nav-link.link-hover(href='category/create') + Create New Category
-    
