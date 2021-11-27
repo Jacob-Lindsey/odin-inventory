@@ -35,11 +35,18 @@ router.get("/categories", category_controller.category_list);
 
 /// PRODUCT ROUTES ///
 
+// GET request for list of all Products.
+router.get("/products", product_controller.product_list);
+
+/* // POST request for creating Product
+router.post("/product/create", product_controller.product_create_post); */
+
+// GET request for creating Product
+router.get("/product/create", product_controller.product_create_get);
+
 // GET request for Product Details
 router.get("/product/:id", product_controller.product_detail);
 
-// GET request for list of all Products.
-router.get("/products", product_controller.product_list);
 
 module.exports = router;
 

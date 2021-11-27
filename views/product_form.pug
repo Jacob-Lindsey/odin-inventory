@@ -1,0 +1,78 @@
+extends layout
+
+block content
+    div.container
+        h1= title
+        div.w-75
+            form(method="POST", action="")
+                div.form-group
+                    label(for="name") Product Name
+                    input#name.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="text",
+                        name="name",
+                        maxlength="40",
+                        placeholder="Enter Product Name",
+                        value=(product === undefined ? '' : product.name)
+                    )
+
+                div.form-group
+                    label(for="price") Product Price
+                    input#name.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="text",
+                        name="price",
+                        maxlength="40",
+                        placeholder="Enter Product Price",
+                        value=(product === undefined ? '' : product.price)
+                    )
+
+                div.form-group
+                    label(for="qty") Available Product Quantity 
+                    input#name.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="text",
+                        name="qty",
+                        maxlength="40",
+                        placeholder="Enter Available Product Quantity",
+                        value=(product === undefined ? '' : product.inStock)
+                    )
+
+                div.form-group
+                    label(for="brand") Product Brand
+                    input#name.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="text",
+                        name="brand",
+                        maxlength="40",
+                        placeholder="Enter Product Brand",
+                        value=(product === undefined ? '' : product.brand)
+                    )
+
+                div.form-group
+                    label(for="category") Product Category
+                    input#name.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="text",
+                        name="category",
+                        maxlength="40",
+                        placeholder="Enter Product Category",
+                        value=(product === undefined ? '' : product.category)
+                    )
+
+                div.form-group
+                    label(for="description") Product Description
+                    textarea#description.form-control.bg-dark.border.border-dark.text-light(
+                        type="text",
+                        name="description",
+                        placeholder="Enter Product Description",
+                        maxlength="500",
+                        value=(product === undefined ? '' : product.description)
+                    )
+
+                button.btn.btn-outline-primary(type="submit") Submit
+
+            if errors
+                ul 
+                    for error in errors 
+                        li!= error.msg

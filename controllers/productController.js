@@ -47,3 +47,10 @@ exports.product_detail = function(req, res, next) {
             });
         });
 };
+
+exports.product_create_get = function(req, res, next) {
+    res.render("product_form", {
+        title: "Create a new product",
+        isUpdating: false,
+    });
+};
