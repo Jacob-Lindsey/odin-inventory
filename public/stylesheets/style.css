@@ -101,6 +101,16 @@ a:hover {
   line-height: 4rem;
 }
 
+.link-fill-sm {
+  display: block;
+  height: 100%;
+  line-height: 2.1rem;
+}
+
+.button-wrapper {
+  height: 3rem;
+}
+
 .create-link {
   color: rgb(15, 148, 15);
   font-weight: 800;
@@ -117,4 +127,50 @@ a:hover {
 
 .no-border {
   border: none;
+}
+
+.product-title {
+  flex: 1;
+  text-align: center;
+}
+
+.product-image-wrapper {
+  flex: 1;
+}
+
+.product-info-wrapper {
+  flex: 1;
+}
+
+.divider-line {
+  background-color: rgba(255, 255, 255, 0.37);
+  margin-bottom: 3rem;
+}
+
+.product-price {
+  font-size: 3.6rem;
+  font-weight: 600;
+  margin-left: 1.5rem;
+}
+
+.product-description {
+  line-height: 1.25rem;
+}
+
+.product-inStock {
+  align-self: flex-start;
+  color: rgb(10, 172, 10);
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-left: 1.5rem;
+  text-align: start;
+}
+
+.product-outOfStock {
+  align-self: flex-start;
+  color: red;
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-left: 1.5rem;
+  text-align: start;
 }

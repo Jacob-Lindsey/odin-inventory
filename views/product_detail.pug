@@ -3,17 +3,22 @@ extends layout
 block content
   div.container.product-wrapper
     div.d-flex.justify-content-between
-      h1 #{title}
-      div.d-flex.gap-sm
+      h1.product-title #{title}
+      div.d-flex.gap-sm.button-wrapper
         button.btn.btn-outline-info.product-detail-button
-          a.link-fill(href=product.url + '/update') &nbsp;EDIT&nbsp;
+          a.link-fill-sm(href=product.url + '/update') &nbsp;EDIT&nbsp;
         button.btn.btn-outline-danger.product-detail-button
-          a.link-fill(href=product.url + '/delete') &nbsp;DELETE&nbsp;
-    div
-      p $#{product.price}
-      br
-      p #{product.description}
-      br
-      p #{product.brand}
-      br
-      p Category: #{product.category.name}
+          a.link-fill-sm(href=product.url + '/delete') &nbsp;DELETE&nbsp;
+    hr.divider-line
+    div.d-flex.justify-content-center
+      div.product-image-wrapper
+        img(src="https://via.placeholder.com/500x750/888888/111111/?text=Product+Placeholder")
+      div.product-info-wrapper.d-flex.flex-column.align-items-start.gap-1
+        p.product-price $#{product.price}
+        br
+        p.product-description.px-4 #{product.description}
+        br
+        if product.inStock > 0
+          p.product-inStock #{product.inStock} in stock
+        else
+          p.product-outOfStock Out of stock
