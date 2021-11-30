@@ -14,7 +14,7 @@ h1 {
 }
 
 a {
-  color: #00B7FF;
+  color: inherit;
   transition: all 0.2s linear;
 }
 
@@ -70,7 +70,7 @@ a:hover {
   min-width: 12rem;
   text-align: center;
   transition: all 0.2s linear;
-  padding: 2.5rem 2rem;
+  
 }
 
 .product-card:hover {
@@ -79,9 +79,42 @@ a:hover {
   cursor: pointer;
 }
 
+.product-link {
+  line-height: 6rem;
+  padding: 2.5rem 2rem;
+}
+
 .product-wrapper {
   background-color: rgb(35,33,40);
   border: 1px solid rgba(238, 238, 238, 0.1);
   border-radius: 5px;
   padding: 2.5rem 2rem;
+}
+
+.product-detail-button {
+  min-width: 100px;
+}
+
+.link-fill {
+  display: block;
+  height: 100%;
+  line-height: 4rem;
+}
+
+.create-link {
+  color: rgb(15, 148, 15);
+  font-weight: 800;
+  transition: all 0.2s linear;
+}
+
+.create-link:hover {
+  color: rgb(153, 218, 153);
+}
+
+.addon-bg-dark {
+  background-color: rgb(42, 38, 48);
+}
+
+.no-border {
+  border: none;
 }

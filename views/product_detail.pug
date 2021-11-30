@@ -5,11 +5,15 @@ block content
     div.d-flex.justify-content-between
       h1 #{title}
       div.d-flex.gap-sm
-        button.btn.btn-outline-info &nbsp;EDIT&nbsp;
-        button.btn.btn-outline-danger DELETE
+        button.btn.btn-outline-info.product-detail-button
+          a.link-fill(href=product.url + '/update') &nbsp;EDIT&nbsp;
+        button.btn.btn-outline-danger.product-detail-button
+          a.link-fill(href=product.url + '/delete') &nbsp;DELETE&nbsp;
     div
       p $#{product.price}
       br
       p #{product.description}
       br
       p #{product.brand}
+      br
+      p Category: #{product.category.name}

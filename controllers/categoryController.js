@@ -63,14 +63,14 @@ exports.category_create_get = function(req, res, next) {
 };
 
 exports.category_create_post = [
-    body("name")
+    body("name", "Category name required")
         .trim()
         .isLength({ min: 1 })
-        .withMessage("Category name required"),
-    body("description").optional({ checkFalsy: true }),
-
-    check("name").escape(),
-    check("description").escape(),
+        .escape(),
+    body("description", "Description required")
+        .trim()
+        .isLength({ min: 1 })
+        .escape(),
 
     (req, res, next) => {
         const errors = validationResult(req);
@@ -97,6 +97,75 @@ exports.category_create_post = [
         }
     },
 ];
+
+exports.category_delete_get = function (req, res, next) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        let err = new Error("Invalid ObjectID");
+        err.status = 404;
+        return next(err);
+    }
+    async.parallel(
+        {
+            category: function(callback) {
+                Category.findById(req.params.id).exec(callback);
+            },
+            category_products: function(callback) {
+                Product.find({ category: req.params.id }).exec(callback);
+            },
+        },
+        function (err, results) {
+            if (err) {
+                return next(err);
+            }
+            if (results.category == null) {
+                let err = new Error("Category not found");
+                err.status = 404;
+                return next(err);
+            }
+
+            res.render("category_delete", {
+                title: "Delete Category: " + results.category.title,
+                category: results.category,
+                category_products: results.category_products,
+            });
+        }
+    );
+};
+
+exports.category_delete_post = function (req, res, next) {
+  async.parallel(
+    {
+      category: function (callback) {
+        Category.findById(req.params.id).exec(callback)
+      },
+      category_products: function (callback) {
+        Product.find({ category: req.params.id }).exec(callback)
+      }
+    },
+    function (err, results) {
+      if (err) return next(err)
+
+      if (results.category_products.length > 0) {
+        res.render('category_delete', {
+          title: 'Delete Category: ' + results.category.title,
+          category: results.category,
+          category_products: results.category_products
+        })
+        return
+      } else {
+        Category.findByIdAndRemove(
+          req.body.categoryid,
+          function deleteCategory (err) {
+            if (err) {
+              return next(err);
+            }
+            res.redirect('/categories');
+          }
+        );
+      }
+    }
+  );
+};
 
 exports.category_update_post = [
     body("name")

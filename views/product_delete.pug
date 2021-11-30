@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  div.container.product-wrapper
+    div.d-flex.flex-column.align-items-center.py-5
+
+      h2.mb-5 Are you sure you want to delete this product?
+
+      form(method="POST", action="")
+        input#id(
+            type='hidden',
+            name='id',
+            value=product._id,
+            required
+        )
+
+        div.d-flex.gap-sm
+            button.btn.btn-outline-warning.product-detail-button(type="submit") CONFIRM
+            button.btn.btn-outline-info.product-detail-button
+                a.link-fill(href=product.url) &nbsp;CANCEL&nbsp;

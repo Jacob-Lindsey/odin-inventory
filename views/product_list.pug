@@ -2,8 +2,13 @@ extends layout
 
 block content
   div.container
-    h1 #{title} Guitars
+    div.d-flex.justify-content-between
+      h1 #{title} Guitars
+      div.d-flex.gap-sm
+            button.btn.btn-outline-info.product-detail-button(type="submit") EDIT
+            button.btn.btn-outline-danger.product-detail-button
+              a.link-fill(href=category.url + '/delete') &nbsp;DELETE&nbsp;
     div.d-flex.flex-wrap.gap-2.justify-content-center
       each product in products_list
         div.product-card
-          a(href=product.url) #{product.name}
+          a.product-link(href=product.url) #{product.name}

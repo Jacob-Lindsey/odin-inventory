@@ -5,5 +5,7 @@ mixin sidenav(category_list)
         each category in category_list
             div.nav-link.link-hover.d-flex
                 a(href=category.url) #{category.name}
-        div.nav-link.link-hover
-            a.nav-link.link-hover(href='category/create') + &nbsp;Create New Category
+        div.nav-link.link-hover.d-flex
+            a.create-link(href='/category/create') + &nbsp;Create New Category
+        div.nav-link.link-hover.d-flex
+            a.create-link(href='/product/create') + &nbsp;Create New Product
