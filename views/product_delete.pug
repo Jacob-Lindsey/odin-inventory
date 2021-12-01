@@ -14,7 +14,16 @@ block content
             required
         )
 
-        div.d-flex.gap-sm
+        div.form-group
+            label(for='password') Admin Password
+            input#password.form-control.bg-dark.border.border-dark.text-light(
+                required
+                type="password",
+                name="password",
+                placeholder="Enter your admin password"
+            )
+
+        div.d-flex.gap-sm.button-wrapper
             button.btn.btn-outline-warning.product-detail-button(type="submit") CONFIRM
             button.btn.btn-outline-info.product-detail-button
-                a.link-fill(href=product.url) &nbsp;CANCEL&nbsp;
+                a.link-fill-sm(href=product.url) &nbsp;CANCEL&nbsp;

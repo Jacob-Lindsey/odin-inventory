@@ -11,17 +11,26 @@ block content
     else
         div.d-flex.flex-column.align-items-center.py-5
 
-        h2.mb-5 Are you sure you want to delete this category?
+            h2.mb-5 Are you sure you want to delete this category?
 
-        form(method="POST", action="")
-            input#categoryid(
-                type='hidden',
-                name='categoryid',
-                value=category._id,
-                required
-            )
+            form(method="POST", action="")
+                input#categoryid(
+                    type='hidden',
+                    name='categoryid',
+                    value=category._id,
+                    required
+                )
 
-            div.d-flex.gap-sm
-                button.btn.btn-outline-warning.product-detail-button(type="submit") CONFIRM
-                button.btn.btn-outline-info.product-detail-button
-                    a.link-fill(href=category.url) &nbsp;CANCEL&nbsp;
+                div.form-group
+                    label(for='password') Admin Password
+                    input#password.form-control.bg-dark.border.border-dark.text-light(
+                        required
+                        type="password",
+                        name="password",
+                        placeholder="Enter your admin password"
+                    )
+
+                div.d-flex.gap-sm.button-wrapper
+                    button.btn.btn-outline-warning.product-detail-button(type="submit") CONFIRM
+                    button.btn.btn-outline-info.product-detail-button
+                        a.link-fill-sm(href=category.url) &nbsp;CANCEL&nbsp;

@@ -2,6 +2,7 @@ mixin sidenav(category_list)
     nav.nav.flex-column.position-absolute.absolute-left-top.gap-1
         div.nav-link.link-hover
             a(href='/products') All Products
+        p.nav-title Categories
         each category in category_list
             div.nav-link.link-hover.d-flex
                 a(href=category.url) #{category.name}

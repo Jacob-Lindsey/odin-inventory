@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var Product = require('../models/product');
 var Category = require('../models/category');
 var async = require('async');
@@ -119,6 +121,8 @@ exports.product_create_post = [
                         title: "Create a new product",
                         categories: results.categories,
                         product: product,
+                        isNew: true,
+                        isUpdating: false,
                         errors: errors.array(),
                     });
                 }
@@ -163,12 +167,18 @@ exports.product_delete_get = function (req, res, next) {
 };
 
 exports.product_delete_post = function (req, res, next) {
-    Product.findByIdAndRemove(req.body.id, function deleteProduct(err) {
-        if (err) {
-            return next(err);
-        };
-        res.redirect("/products");
-    });
+    if (req.body.password != process.env.ADMIN_PASSWORD) {
+        let err = new Error("Incorrect password");
+        err.status = 401;
+        return next(err);
+    } else {
+        Product.findByIdAndRemove(req.body.id, function deleteProduct(err) {
+            if (err) {
+                return next(err);
+            };
+            res.redirect("/products");
+        });
+    }
 };
 
 exports.product_update_get = function (req, res, next) {
@@ -233,58 +243,64 @@ exports.product_update_post = [
     body("category").escape(),
 
     (req, res, next) => {
-        // TODO: Add password protection, if pw wrong: error ->  else: execute code
-        const errors = validationResult(req);
-        var product = new Product({
-            name: req.body.name,
-            description: req.body.description,
-            inStock: req.body.inStock,
-            price: req.body.price,
-            category: req.body.category,
-            brand: req.body.brand,
-            _id: req.params.id,
-        });
-
-        if (!errors.isEmpty()) {
-            async.parallel(
-                {
-                    categories: function(callback) {
-                        Category.find().exec(callback);
-                    },
-                },
-                function(err, results) {
-                    if (err) {
-                        return next(err);
-                    }
-                    res.render("product_form", {
-                        title: "Create a new product",
-                        categories: results.categories,
-                        product: product,
-                        errors: errors.array(),
-                    });
-                }
-            );
-            return;
+        if (req.body.password != process.env.ADMIN_PASSWORD) {
+            let err = new Error("Incorrect password");
+            err.status = 401;
+            return next(err);
         } else {
-            Product.findByIdAndUpdate(
-                req.params.id,
-                product,
-                {},
-                function(err, theproduct) {
-                    if (err) {
-                        return next(err);
+            const errors = validationResult(req);
+            var product = new Product({
+                name: req.body.name,
+                description: req.body.description,
+                inStock: req.body.inStock,
+                price: req.body.price,
+                category: req.body.category,
+                brand: req.body.brand,
+                _id: req.params.id,
+            });
+
+            if (!errors.isEmpty()) {
+                async.parallel(
+                    {
+                        categories: function(callback) {
+                            Category.find().exec(callback);
+                        },
+                    },
+                    function(err, results) {
+                        if (err) {
+                            return next(err);
+                        }
+                        res.render("product_form", {
+                            title: "Create a new product",
+                            categories: results.categories,
+                            product: product,
+                            isUpdating: true,
+                            errors: errors.array(),
+                        });
                     }
-                    if (theproduct) {
-                        res.redirect(theproduct.url);
-                    } else {
-                        let err = new Error(
-                            "Product not found."
-                        );
-                        err.status = 404;
-                        return next(err);
+                );
+                return;
+            } else {
+                Product.findByIdAndUpdate(
+                    req.params.id,
+                    product,
+                    {},
+                    function(err, theproduct) {
+                        if (err) {
+                            return next(err);
+                        }
+                        if (theproduct) {
+                            res.redirect(theproduct.url);
+                        } else {
+                            let err = new Error(
+                                "Product not found."
+                            );
+                            err.status = 404;
+                            return next(err);
+                        }
                     }
-                }
-            );
+                );
+            }
         }
     },
 ];

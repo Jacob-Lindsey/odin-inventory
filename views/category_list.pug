@@ -4,4 +4,11 @@ include ../partials/mixins
 block content
   div.container
     +sidenav(category_list)
-    h1= 'Guitar shop'
+    h1.text-center Music Gear
+    div.d-flex.flex-wrap.gap-2.justify-content-center.w-75.mx-auto
+      each category in category_list
+        a.category-link(href=category.url)
+          div.d-flex.flex-column.gap-1.align-items-start
+            div
+              img(src=`https://via.placeholder.com/320x120/332D3B/CCCCCC/?text=${category.name}`)
+            

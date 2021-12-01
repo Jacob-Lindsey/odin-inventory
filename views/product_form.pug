@@ -69,11 +69,22 @@ block content
                         type="text",
                         name="description",
                         placeholder="Enter Product Description",
-                        maxlength="500",
+                        maxlength="5000",
+                        rows='10',
                         value=(product === undefined ? '' : product.description)
                     ) #{product === undefined ? '' : product.description}
+
+                if isUpdating
+                    div.form-group
+                        label(for='password') Admin Password
+                        input#password.form-control.bg-dark.border.border-dark.text-light(
+                            required
+                            type="password",
+                            name="password",
+                            placeholder="Enter your admin password"
+                        )
                     
-                button.btn.btn-outline-primary(type="submit") Submit
+                button.btn.btn-outline-success(type="submit") Submit
 
             if errors
                 ul 

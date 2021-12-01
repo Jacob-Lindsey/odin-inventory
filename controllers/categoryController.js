@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 var Category = require('../models/category');
 var Product = require('../models/product');
 var async = require('async');
@@ -133,38 +135,67 @@ exports.category_delete_get = function (req, res, next) {
 };
 
 exports.category_delete_post = function (req, res, next) {
-  async.parallel(
-    {
-      category: function (callback) {
-        Category.findById(req.params.id).exec(callback)
-      },
-      category_products: function (callback) {
-        Product.find({ category: req.params.id }).exec(callback)
-      }
-    },
-    function (err, results) {
-      if (err) return next(err)
-
-      if (results.category_products.length > 0) {
-        res.render('category_delete', {
-          title: 'Delete Category: ' + results.category.title,
-          category: results.category,
-          category_products: results.category_products
-        })
-        return
-      } else {
-        Category.findByIdAndRemove(
-          req.body.categoryid,
-          function deleteCategory (err) {
-            if (err) {
-              return next(err);
+    if (req.body.password != process.env.ADMIN_PASSWORD) {
+        let err = new Error("Incorrect password");
+        err.status = 401;
+        return next(err);
+    } else {
+        async.parallel(
+            {
+            category: function (callback) {
+                Category.findById(req.params.id).exec(callback)
+            },
+            category_products: function (callback) {
+                Product.find({ category: req.params.id }).exec(callback)
             }
-            res.redirect('/categories');
-          }
+            },
+            function (err, results) {
+                if (err) return next(err)
+
+                if (results.category_products.length > 0) {
+                    res.render('category_delete', {
+                        title: 'Delete Category: ' + results.category.title,
+                        category: results.category,
+                        category_products: results.category_products
+                    })
+                    return
+                } else {
+                    Category.findByIdAndRemove(
+                        req.body.categoryid,
+                        function deleteCategory (err) {
+                            if (err) {
+                                return next(err);
+                            }
+                            res.redirect('/categories');
+                        }
+                    );
+                }
+            }
         );
-      }
     }
-  );
+};
+
+exports.category_update_get = function (req, res, next) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        let err = new Error("Invalid ObjectID");
+        err.status = 404;
+        return next(err);
+    }
+    Category.findById(req.params.id, function (err, category) {
+        if (err) {
+            return next(err);
+        };
+        if (category == null) {
+            var err = new Error("Category not found");
+            err.status = 404;
+            return next(err);
+        }
+        res.render("category_form", {
+            title: "Update Category",
+            category: category,
+            isUpdating: true,
+        });
+    });
 };
 
 exports.category_update_post = [
@@ -175,32 +206,40 @@ exports.category_update_post = [
     body("description").optional({ checkFalsy: true }),
 
     (req, res, next) => {
-        var category = new Category({
-            name: req.body.name,
-            description: req.body.description,
-            _id: req.params.id,
-        });
-
-        if (!errors.isEmpty()) {
-            res.render("category_form", {
-                title: "Update Category",
-                category: category,
-                isUpdating: true,
-                errors: errors.array(),
-            });
-            return;
+        if (req.body.password != process.env.ADMIN_PASSWORD) {
+            let err = new Error("Incorrect password");
+            err.status = 401;
+            return next(err);
         } else {
-            Category.findByIdAndUpdate(
-                req.params.id,
-                category,
-                {},
-                function(err, thecategory) {
-                    if (err) {
-                        return next(err);
+            const errors = validationResult(req);
+            var category = new Category({
+                name: req.body.name,
+                description: req.body.description,
+                _id: req.params.id,
+            });
+
+            if (!errors.isEmpty()) {
+                res.render("category_form", {
+                    title: "Update Category",
+                    category: category,
+                    isUpdating: true,
+                    errors: errors.array(),
+                });
+                return;
+            } else {
+                Category.findByIdAndUpdate(
+                    req.params.id,
+                    category,
+                    {},
+                    function(err, thecategory) {
+                        if (err) {
+                            return next(err);
+                        }
+                        res.redirect(thecategory.url);
                     }
-                    res.redirect(thecategory.url);
-                }
-            );
+                );
+            }
         }
+        
     },
 ];

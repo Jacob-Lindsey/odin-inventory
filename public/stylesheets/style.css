@@ -24,20 +24,37 @@ a:hover {
 }
 
 .home-button {
-  color: #eee;
-  left: 0.5rem;
+  border: 1px solid rgb(58, 163, 204);
+  border-radius: 2px;
+  color: rgb(58, 163, 204);
+  font-size: 1rem;
+  font-weight: 700;
+  left: 1.4rem;
   position: absolute;
   top: 1.4rem;
-  transition: all 0.2s linear;
+  transition: all 0.5s ease;
 }
 
 .home-button:hover {
-  color: rgb(120, 245, 120);
-  font-size: 1.1rem;
+  background-color: rgb(36,32,59);
+  border-radius: 4px;
+  color: rgb(0, 183, 255);
+}
+
+.nav-title {
+  color: rgb(58, 163, 204);
+  margin: 0.2rem 0;
+  text-indent: 0.75rem;
+}
+
+.nav-title::before,
+.nav-title::after {
+  content: ' -- ';
+  opacity: 0.5;
 }
 
 .absolute-left-top {
-  left: 1rem;
+  left: 2rem;
   top: 5.75rem;
 }
 
@@ -64,24 +81,33 @@ a:hover {
 }
 
 .product-card {
-  background-color: rgb(35,33,40);
-  border: 1px solid rgba(238, 238, 238, 0.1);
   border-radius: 5px;
-  min-width: 12rem;
-  text-align: center;
+  min-height: 420px;
+  padding-top: 0.5rem;
   transition: all 0.2s linear;
-  
 }
 
 .product-card:hover {
-  background-color: rgb(42,39,48);
-  border: 1px solid rgba(238, 238, 238, 0.3);
   cursor: pointer;
 }
 
+.product-card > p {
+  max-width: 75%;
+  word-wrap: break-word;
+}
+
 .product-link {
-  line-height: 6rem;
-  padding: 2.5rem 2rem;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 24%;
+  padding: 0.5rem 0 1rem 0;
+  transition: all 0.2s ease-in-out;
+}
+
+.product-link:hover {
+  box-shadow: rgb(0 0 0 / 40%) 0px 0px 10px;
 }
 
 .product-wrapper {
@@ -93,6 +119,19 @@ a:hover {
 
 .product-detail-button {
   min-width: 100px;
+}
+
+.category-link {
+  align-items: center;
+  border: 2px solid rgba(204, 204, 204, 0);
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  transition: all 0.2s linear;
+}
+
+.category-link:hover {
+  border: 2px solid rgba(204, 204, 204, 0.25);
 }
 
 .link-fill {
@@ -112,7 +151,7 @@ a:hover {
 }
 
 .create-link {
-  color: rgb(15, 148, 15);
+  color: rgb(21, 197, 21);
   font-weight: 800;
   transition: all 0.2s linear;
 }
@@ -173,4 +212,15 @@ a:hover {
   font-weight: 600;
   margin-left: 1.5rem;
   text-align: start;
+}
+
+.error-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.error-wrapper > pre {
+  color: #ddd;
 }

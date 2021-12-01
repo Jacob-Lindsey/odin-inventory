@@ -1,6 +1,6 @@
+require("dotenv").config();
 var createError = require('http-errors');
 var express = require('express');
-var async = require('async');
 var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -15,14 +15,10 @@ var app = express();
 app.use(logger('dev'));
 
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://pantzzzz:jakejake@cluster0.bjfcc.mongodb.net/inventory?retryWrites=true&w=majority';
+var mongoDB = process.env.DB_STRING;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));
-
-var catDetails = function(callback) {
-  Category.find().exec(callback);
-};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
